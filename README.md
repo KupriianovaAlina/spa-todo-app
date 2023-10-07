@@ -16,4 +16,4 @@
 3. Запустите команду `npm start` и откройте [http://localhost:3000](http://localhost:3000) в своем браузере
 
 ## Проект в GitPages
-https://kupriianovaalina.github.io/spa-todo-app/
+[https://kupriianovaalina.github.io/spa-todo-app/](https://spa-todo-app-ten.vercel.app/)https://spa-todo-app-ten.vercel.app/
