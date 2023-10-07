@@ -1,4 +1,4 @@
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Button } from "react-bootstrap";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import TaskCard from "./TaskCard";
@@ -8,7 +8,6 @@ const Section = ({ statusInfo }) => {
   const dispatch = useDispatch();
 
   const addItemToSection = (id) => {
-    console.log('я работаю')
     dispatch({ type: 'CHANGE_TASK_STATUS', payload: { id, newStatus: status } })
 
   }
@@ -32,9 +31,10 @@ const Section = ({ statusInfo }) => {
       </div>
       <Container className={`d-flex align-items-center flex-column mb-2 mt-2`}>
         {tasks.map((task) => <TaskCard task={task} key={task.id}></TaskCard>)}
+        <Button variant="outline-dark" style={{ width: "95%" }} onClick={() => dispatch({ type: 'OPEN_MODAL', payload: { type: 'adding', status } })}>+</Button>
       </Container>
     </Col >
-  )
+  );
 };
 
 export default Section;
