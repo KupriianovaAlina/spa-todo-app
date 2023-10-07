@@ -71,7 +71,10 @@ const TasksPage = () => {
               name="inputValue"
               placeholder="Tasks's name or id"
               onChange={formik.handleChange}
-              value={formik.values.inputValue} />
+              value={formik.values.inputValue}
+              isInvalid={formik.touched.inputValue && formik.errors.inputValue}
+              onBlur={formik.handleBlur}
+            />
             <Form.Control.Feedback type="invalid">{formik.errors.inputValue}</Form.Control.Feedback>
           </div>
           <div className="col-auto">
