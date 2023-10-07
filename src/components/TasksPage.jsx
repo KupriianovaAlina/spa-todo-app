@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { v4 as uuid } from 'uuid';
 import Section from "./Section";
 import { Context } from "./ContextProvider";
 import { useContext } from "react";
@@ -37,6 +36,8 @@ const TasksPage = () => {
       const [taskById] = tasks.filter((task) => task.id === inputValue);
       const [taskByName] = tasks.filter((task) => task.name === inputValue);
 
+      console.log(taskById, taskByName);
+
       if (!taskByName && !taskById) {
         formik.errors.inputValue = 'Oops, no matching task, sorry!';
         return;
@@ -49,7 +50,6 @@ const TasksPage = () => {
 
       if (taskByName) {
         dispatch({ type: 'OPEN_MODAL', payload: { type: 'info', taskId: taskByName.id } });
-        return;
       }
     },
     validationSchema: yup.object({
@@ -72,6 +72,7 @@ const TasksPage = () => {
               placeholder="Tasks's name or id"
               onChange={formik.handleChange}
               value={formik.values.inputValue} />
+            <Form.Control.Feedback type="invalid">{formik.errors.inputValue}</Form.Control.Feedback>
           </div>
           <div className="col-auto">
             <Button type="submit" variant="dark" className="btn btn-primary" disabled={!(formik.isValid && formik.dirty)}>Search</Button>
