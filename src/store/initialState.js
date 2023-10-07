@@ -14,7 +14,7 @@ const initialState = {
     { name: 'Find Lenin\'s 3D model', description: 'Check free3d.com', projectId: '2', id: '6', status: 'development', date: '14.09.2023' },
     { name: 'Make a figure', description: 'It may be difficult, but it will definitely be a lot of fun', projectId: '2', id: '7', status: 'queque', date: '18.09.2023' },
     { name: 'Understand what CRM systems are', description: 'Just read some books: "Beyond CRM Basics: An MVP Guide to Expand Your Knowledge and Grow Your Career", "CRM For Dummies" and "The Customer Centricity Playbook: Implement a Winning Strategy Driven by Customer Lifetime Value"', projectId: '3', id: '8', status: 'queque', date: '01.09.2023' },
-    { name: 'Order it from a professional', description: 'You can find several useful contacts in the database', projectId: '3', id: '8', status: 'development', date: '19.09.2023' },
+    { name: 'Order it from a professional', description: 'You can find several useful contacts in the database', projectId: '3', id: '9', status: 'development', date: '19.09.2023' },
   ],
   currentProjectId: null,
 }
