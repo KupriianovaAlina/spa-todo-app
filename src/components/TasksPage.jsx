@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { Container, Row, Form, Button } from "react-bootstrap";
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useState } from "react";
 import Section from "./Section";
 import { Context } from "./ContextProvider";
 import { useContext } from "react";
@@ -9,6 +8,8 @@ import Modal from "./modals/Modal";
 
 const TasksPage = () => {
   const context = useContext(Context);
+  const [search, setSearch] = useState('');
+  const [error, setError] = useState(null);
 
   const currentProjectId = context.getCurrentProjectId();
   const dispatch = useDispatch();
@@ -25,44 +26,33 @@ const TasksPage = () => {
     { status: 'done', bg: 'bg-success', tasks: doneTasks }
   ];
 
-  const formik = useFormik({
-    initialValues: {
-      inputValue: '',
-    },
-    onSubmit: ({ inputValue }) => {
-      console.log(inputValue);
-      if (inputValue === '' || inputValue.trim() === '') return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search === '' || search.trim() === '') return;
 
-      const [taskById] = tasks.filter((task) => task.id === inputValue);
-      const [taskByName] = tasks.filter((task) => task.name === inputValue);
+    const [taskById] = tasks.filter((task) => task.id === search);
+    const [taskByName] = tasks.filter((task) => task.name === search);
 
-      console.log(taskById, taskByName);
+    if (!taskByName && !taskById) {
+      setError('Oops, no matching task, sorry!');
+      return;
+    }
 
-      if (!taskByName && !taskById) {
-        formik.errors.inputValue = 'Oops, no matching task, sorry!';
-        return;
-      }
+    setSearch('');
+    if (taskById) {
+      dispatch({ type: 'OPEN_MODAL', payload: { type: 'info', taskId: taskById.id } });
+      return;
+    }
 
-      if (taskById) {
-        dispatch({ type: 'OPEN_MODAL', payload: { type: 'info', taskId: taskById.id } });
-        return;
-      }
-
-      if (taskByName) {
-        dispatch({ type: 'OPEN_MODAL', payload: { type: 'info', taskId: taskByName.id } });
-      }
-    },
-    validationSchema: yup.object({
-      inputValue: yup
-        .string()
-        .required()
-    }),
-  });
+    if (taskByName) {
+      dispatch({ type: 'OPEN_MODAL', payload: { type: 'info', taskId: taskByName.id } });
+    }
+  }
 
   return (
     <Container className="vh-100">
       <Row>
-        <Form onSubmit={formik.handleSubmit} className="d-flex justify-content-center row g-3">
+        <Form onSubmit={handleSubmit} className="d-flex justify-content-center row g-3">
           <div className="col-auto">
             <Form.Control
               className="border border-secondary"
@@ -70,15 +60,16 @@ const TasksPage = () => {
               id="inputValue"
               name="inputValue"
               placeholder="Tasks's name or id"
-              onChange={formik.handleChange}
-              value={formik.values.inputValue}
-              isInvalid={formik.touched.inputValue && formik.errors.inputValue}
-              onBlur={formik.handleBlur}
+              onChange={(e) => {
+                setError(null);
+                setSearch(e.target.value)
+              }}
+              value={search}
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.inputValue}</Form.Control.Feedback>
+            {error && <p className="text-danger">{error}</p>}
           </div>
           <div className="col-auto">
-            <Button type="submit" variant="dark" className="btn btn-primary" disabled={!(formik.isValid && formik.dirty)}>Search</Button>
+            <Button type="submit" variant="dark" className="btn btn-primary">Search</Button>
           </div>
         </Form>
       </Row>

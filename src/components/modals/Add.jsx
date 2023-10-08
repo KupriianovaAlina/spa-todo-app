@@ -26,7 +26,6 @@ const Add = () => {
         .string()
         .required('required field')
         .min(3)
-        .max(40)
         .matches(regexNotOnlySpaces, 'not only spaces'),
       description: yup
         .string()
