@@ -16,12 +16,12 @@ const TasksPage = () => {
 
   const tasks = useSelector((state) => state.tasks);
   const currentTasks = tasks.filter((task) => task.projectId === currentProjectId);
-  const quequeTasks = currentTasks.filter((task) => task.status === 'queque');
+  const queueTasks = currentTasks.filter((task) => task.status === 'queue');
   const developmentTasks = currentTasks.filter((task) => task.status === 'development');
   const doneTasks = currentTasks.filter((task) => task.status === 'done');
 
   const statusesInfo = [
-    { status: 'queque', bg: 'bg-danger', tasks: quequeTasks },
+    { status: 'queue', bg: 'bg-danger', tasks: queueTasks },
     { status: 'development', bg: 'bg-warning', tasks: developmentTasks },
     { status: 'done', bg: 'bg-success', tasks: doneTasks }
   ];

@@ -30,8 +30,9 @@ const modal = (state = {}, action) => {
 const tasks = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_NEW_TASK':
+      const currentMaxId = Math.max(...state.map(task => +task.id)) || 0;
       const { newTask } = action.payload;
-      return [...state, newTask];
+      return [...state, { id: currentMaxId + 1, ...newTask }];
     case 'CHANGE_TASK_STATUS':
       const { id, newStatus } = action.payload;
       const [task] = state.filter((task) => task.id === id);

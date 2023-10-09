@@ -5,7 +5,6 @@ import { Context } from "../ContextProvider";
 import { useContext } from "react";
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { v4 as uuid } from 'uuid';
 
 const regexNotOnlySpaces = /[^\s*].*[^\s*]/g;
 
@@ -34,7 +33,7 @@ const Add = () => {
         .matches(regexNotOnlySpaces, 'not only spaces'),
     }),
     onSubmit: ({ name, description }) => {
-      dispatch({ type: 'ADD_NEW_TASK', payload: { newTask: { name, description, projectId: currentProjectId, id: uuid(), status, date: new Date().toLocaleDateString() } } })
+      dispatch({ type: 'ADD_NEW_TASK', payload: { newTask: { name, description, projectId: currentProjectId, status, date: new Date().toLocaleDateString() } } })
       dispatch({ type: 'CLOSE_MODAL' });
     }
   });
